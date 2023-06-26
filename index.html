@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="src/sass/main.scss" />
+
+    <script type="module" src="src/js/script.js"></script>
+    <!-- <script src="src/js/dragAndDropList.js" defer></script> -->
+    <script src="src/js/newEintragHover.js" defer></script>
+
+    <title>To-do-Liste</title>
+  </head>
+  <body>
+    <h1 class="heading-primary">To-Do-List</h1>
+
+    <main class="container">
+      <span class="datum">19 Oktober 2022 - Mittwoch</span>
+
+      <div>
+        <button class="btn btn--new-eintrag" title="neuer Eintrag">
+          <svg>
+            <use href="src/img/sprite.svg#icon-plus" />
+          </svg>
+        </button>
+        <p class="btn-title">Neuer Eintrag</p>
+      </div>
+
+      <ul class="eintragsliste">
+        <!-- <li class="eintragsliste__item">
+          <div class="eintragsliste__content" data-id="1678554058797">
+            <menu class="eintragsliste__menu-eintrag">
+              <button class="btn btn--mark" title="wichtig">
+                <svg>
+                  <use href="src/img/sprite.svg#icon-lampe"></use>
+                </svg>
+              </button>
+              <button class="btn" title="bearbeiten">
+                <svg>
+                  <use
+                    href="http://localhost:1234/sprite.042ef7f5.svg?1686730908761#icon-edit"
+                  ></use>
+                </svg>
+              </button>
+            </menu>
+            <button class="btn btn--check" title="erledigt">
+              <svg>
+                <use
+                  href="http://localhost:1234/sprite.042ef7f5.svg?1686730908761#icon-check"
+                ></use>
+              </svg>
+            </button>
+            <p class="eintragsliste__eintrag" draggable="true">
+              <span class="eintragsliste__eintrag-content"
+                >Hausaufgaben machen</span
+              >
+            </p>
+            <button class="btn btn--loeschen" title="löschen">
+              <svg>
+                <use
+                  href="http://localhost:1234/sprite.042ef7f5.svg?1686730908761#icon-trash"
+                ></use>
+              </svg>
+            </button>
+          </div>
+
+          <div class="edit-eintrag">
+            <form class="edit-eintrag__form">
+              <input type="text" class="edit-eintrag__input" required />
+              <div class="new-eintrag__form-groub">
+                <button class="btn btn--hinzufuegen">Bearbeiten</button>
+                <input
+                  type="reset"
+                  value="Abrechen"
+                  class="btn btn--abrechen"
+                />
+              </div>
+            </form>
+          </div>
+        </li> -->
+      </ul>
+    </main>
+
+    <div class="overlay-new"></div>
+    <div class="overlay-edit"></div>
+    <div class="new-eintrag">
+      <h2 class="heading-secondary">Füge einen Neuen Eintrag hinzu</h2>
+      <form class="new-eintrag__form">
+        <input type="text" class="new-eintrag__input" required />
+        <div class="new-eintrag__form-groub">
+          <button class="btn btn--hinzufuegen">Hinzufügen</button>
+          <input type="reset" value="Abrechen" class="btn btn--abrechen" />
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

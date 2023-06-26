@@ -1,0 +1,245 @@
+.heading-primary {
+  font-weight: 700;
+  font-size: 6.2rem;
+  font-style: italic;
+  color: var(--color-primary-dark);
+  text-align: center;
+  margin: 4.8rem 0;
+  text-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+  animation: headingFontWeight 2s ease-in-out 0.75s both;
+
+  @include responsive(small) {
+  }
+  margin: 3.2rem 0;
+}
+
+.heading-secondary {
+  color: var(--color-grey-dark-1);
+  font-size: 2.4rem;
+}
+
+//****************************/
+//* BUTTON */
+//****************************/
+.btn {
+  display: inline-block;
+  cursor: pointer;
+  background: none;
+  border: none;
+
+  &--check {
+    border: 2px solid var(--color-grey-dark-1);
+  }
+
+  &--loeschen {
+    padding: 0.4rem;
+    border-radius: 4px;
+    transition: all 0.4s;
+
+    &:hover {
+      animation: pulsieren 1s infinite;
+    }
+
+    &:active {
+      animation: none;
+      transform: scale(0.9);
+      box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.25),
+        inset 0 0 0.5rem rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &--new-eintrag {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    transition: all 0.3s;
+    z-index: 5;
+
+    &:hover {
+      transform: rotate(90deg);
+    }
+
+    &:hover + .btn-title span {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    svg {
+      transform: rotate(45deg);
+      width: 5.5rem;
+      height: 5.5rem;
+    }
+
+    & + .btn-title {
+      color: var(--color-primary-dark);
+      text-align: center;
+      font-size: 3rem;
+      letter-spacing: 4px;
+      font-weight: 500;
+
+      span {
+        display: inline-block;
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+    }
+  }
+
+  &--hinzufuegen,
+  &--abrechen {
+    font-weight: 600;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0.8rem;
+    border-radius: 5rem;
+    transition: all 0.3s ease;
+
+    flex: 1;
+  }
+
+  &--hinzufuegen {
+    background-color: var(--color-primary);
+    color: #fff;
+
+    &:hover {
+      border-radius: 3px;
+    }
+  }
+
+  &--abrechen {
+    color: var(--color-primary-dark);
+    border: 2px solid var(--color-primary-dark);
+
+    &:hover {
+      border-radius: 3px;
+      background-color: var(--color-primary-dark);
+      color: #fff;
+    }
+  }
+}
+
+/****************************/
+/* HELFER-SETTINGS/CLASSES */
+/****************************/
+
+//****************************/
+//* MIX-INS*/
+//****************************/
+@mixin borderGradientDirection($richtung) {
+  background-image: linear-gradient(
+    to $richtung,
+    transparent,
+    var(--color-primary)
+  );
+}
+
+//****************************/
+//* ANIMATTIONeN */
+//****************************/
+@keyframes pulsieren {
+  0% {
+    transform: scale(1);
+    box-shadow: none;
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.25),
+      inset 0 0 1rem rgba(0, 0, 0, 0.2);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: none;
+  }
+}
+
+@keyframes lineScale {
+  0%,
+  30% {
+    transform: scaleX(0);
+  }
+
+  70% {
+    transform: scaleX(1);
+  }
+
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes movePen {
+  0%,
+  30% {
+    left: 0;
+    visibility: visible;
+  }
+
+  70% {
+    left: 99%;
+  }
+
+  100% {
+    left: 99%;
+    visibility: hidden;
+  }
+}
+
+@keyframes moveBackground {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: -100% 30%;
+  }
+}
+
+//* == Border Rotation ==
+@keyframes borderMoveTop {
+  from {
+    transform: translate(-100%, 0);
+  }
+  to {
+    transform: translate(100%, 0);
+  }
+}
+
+@keyframes borderMoveRight {
+  from {
+    transform: translate(0, -100%);
+  }
+  to {
+    transform: translate(0, 100%);
+  }
+}
+
+@keyframes borderMoveBottom {
+  from {
+    transform: translate(100%, 0);
+  }
+  to {
+    transform: translate(-100%, 0);
+  }
+}
+
+@keyframes borderMoveLeft {
+  from {
+    transform: translate(0, 100%);
+  }
+  to {
+    transform: translate(0, -100%);
+  }
+}
+
+@keyframes headingFontWeight {
+  0% {
+    opacity: 0;
+    font-weight: 100;
+  }
+  100% {
+    opacity: 1;
+    font-weight: 700;
+  }
+}

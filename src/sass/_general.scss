@@ -1,0 +1,100 @@
+/* 
+= SYSTEM =
+
+- Font sizes (px):
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+- Spacing system (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+*/
+
+:root {
+  // = COLORS =
+  --color-primary: #ffd43b;
+  --color-primary-rgb: 255, 212, 59;
+
+  --color-primary-light: #ffe176;
+  --color-primary-dark: #4c4012;
+
+  --color-secondary-light: xxx;
+  --color-secondary-dark: xxxxx;
+
+  --color-grey-light-1: #fff6d8;
+  --color-grey-dark-1: #333;
+}
+
+//*****************************/
+//* GENERAL */
+//****************************/
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+
+  @include responsive(medium) {
+    font-size: 43.75%;
+  }
+}
+
+body {
+  font-family: "Roboto Mono", sans-serif;
+  color: #333;
+  min-height: 100vh;
+  background: linear-gradient(
+      rgba(var(--color-primary-rgb), 0.7),
+      rgba(var(--color-primary-rgb), 0.7)
+    ),
+    url(../img/background.svg);
+  background-position: 0% 0%;
+  // animation: moveBackground 40s linear infinite alternate;
+}
+
+/****************************/
+/* LAYOUT */
+/****************************/
+.container {
+  margin: 0 auto 1.6rem;
+  max-width: 110rem;
+  width: 95vw;
+  padding: 2.4rem;
+  background-color: var(--color-grey-light-1);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 15%);
+
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+
+  @include responsive(small) {
+    padding: 0.8rem;
+  }
+}
+
+.overlay-new {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: none;
+
+  &.overlay-new--active {
+    backdrop-filter: brightness(0.7) blur(2);
+    display: block;
+  }
+}
+
+.overlay-edit {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: none;
+
+  &.overlay-edit--active {
+    display: block;
+  }
+}

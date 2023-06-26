@@ -1,0 +1,334 @@
+@import "fonts";
+@import "queries";
+@import "general";
+@import "typografie";
+
+.datum {
+  // font-size: 3.6rem;
+  font-size: min(2rem + 2vw, 3.6rem);
+  font-weight: bold;
+  display: inline-block;
+}
+
+//*****************************/
+//* Eintragsliste */
+//****************************/
+.eintragsliste {
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+
+  &__item {
+    transition: all 0.2s;
+    position: relative;
+
+    &.dragover {
+      background-color: var(--color-primary-light);
+      transform: scale(1.02);
+    }
+  }
+
+  &__content {
+    padding: 2.4rem;
+    padding-top: 2.8rem;
+    position: relative;
+    border-radius: 5px;
+
+    display: flex;
+    align-items: flex-end;
+    gap: 2.4rem;
+
+    @include responsive(small) {
+      padding: 2.8rem 1.2rem 2.4rem;
+      gap: 1.6rem;
+    }
+
+    &.dropzoneOverlay::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+    }
+  }
+
+  &__menu-eintrag {
+    position: absolute;
+    left: 50%;
+    top: 1.8rem;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    gap: 2.4rem;
+
+    svg {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+  }
+
+  .btn--check svg {
+    height: 3rem;
+    width: 3rem;
+    color: green;
+    transform: scale(1.8);
+    stroke-dasharray: 1;
+    stroke-dashoffset: -1;
+    transition: all 0.6s;
+  }
+
+  &__eintrag {
+    font-size: 3rem;
+    line-height: 1.1;
+    padding-top: 0.8rem;
+    border-bottom: 2px solid var(--color-grey-dark-1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: grab;
+    flex: 1;
+
+    &.origin-place-hidden {
+      opacity: 0;
+    }
+  }
+
+  &__eintrag-content {
+    position: relative;
+    padding: 0 0.8rem;
+
+    @include responsive(small) {
+      font-size: 2.6rem;
+    }
+
+    &::after,
+    &::before {
+      content: "";
+      display: inline-block;
+      position: absolute;
+      left: 0;
+    }
+
+    &::before {
+      width: 100%;
+      height: 4px;
+      background-color: red;
+      top: 53%;
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.95s cubic-bezier(0.83, 0, 0.17, 1) 1s;
+    }
+  }
+
+  .btn--loeschen svg {
+    height: 3rem;
+    width: 3rem;
+    fill: var(--color-primary-dark);
+  }
+}
+
+//? === wenn Eintrag checked ===
+.eintragsliste__content--checked {
+  .btn--check,
+  .eintragsliste__menu-eintrag,
+  .eintragsliste__eintrag-content {
+    filter: opacity(50%);
+    transition-delay: 2.8s;
+  }
+
+  .btn--check {
+    pointer-events: none;
+
+    svg {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .eintragsliste__menu-eintrag {
+    pointer-events: none;
+  }
+
+  .eintragsliste__eintrag-content::after {
+    visibility: hidden;
+    width: 3rem;
+    height: 3rem;
+    background: url("../img/stift.svg");
+    background-size: cover;
+    top: -0.4rem;
+    animation: movePen 1.8s cubic-bezier(0.83, 0, 0.17, 1) 0.6s forwards;
+  }
+
+  &.u-animation-stop {
+    //! Wiederholung Animation "movePen" nach dragDrop verhindern
+    .eintragsliste__eintrag-content::after {
+      animation-play-state: paused;
+    }
+  }
+
+  .eintragsliste__eintrag-content::before {
+    transform: scaleX(1);
+  }
+}
+
+//? === wenn Eintrag markiert ===
+%before-after-border-property {
+  content: "";
+  position: absolute;
+  transform: translate(0, 0);
+  box-shadow: 0 0 1rem var(--color-primary);
+}
+
+.eintragsliste__item:has(.eintragsliste__content--mark) {
+  position: relative;
+  overflow: hidden;
+
+  &::before,
+  &::after {
+    @extend %before-after-border-property;
+    height: 100%;
+    width: 3px;
+    bottom: 0;
+  }
+
+  &::before {
+    left: 0;
+    @include borderGradientDirection(top);
+    animation: borderMoveLeft 2s linear infinite 1s;
+  }
+
+  &::after {
+    right: 0;
+    @include borderGradientDirection(bottom);
+    animation: borderMoveRight 2s linear infinite 1s;
+  }
+
+  .eintragsliste__content {
+    &::before,
+    &::after {
+      @extend %before-after-border-property;
+      width: 100%;
+      height: 3px;
+    }
+
+    &::before {
+      left: 0;
+      top: 0;
+      @include borderGradientDirection(right);
+      animation: borderMoveTop 2s linear infinite;
+    }
+
+    &::after {
+      right: 0;
+      bottom: 0;
+      @include borderGradientDirection(left);
+      animation: borderMoveBottom 2s linear infinite;
+    }
+
+    .btn--mark svg {
+      fill: var(--color-primary);
+      filter: drop-shadow(0 0 0.5rem var(--color-primary))
+        drop-shadow(0 0 1.5rem var(--color-primary));
+    }
+  }
+}
+
+//*****************************/
+//* New-Eintrag-Form */
+//****************************/
+.new-eintrag {
+  background-color: var(--color-grey-light-1);
+  padding: 2.4rem;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  border-radius: 4px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+  z-index: 20;
+  transform: translate(-50%, -50%) scale(0.4);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+
+  &--active {
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+
+  &__form {
+    font-size: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: inherit;
+  }
+
+  &__input {
+    padding: 0.8rem 1.2rem;
+    font-family: inherit;
+    font-size: inherit;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-grey-dark-1);
+
+    &:focus {
+      outline: none;
+      border: 1px solid var(--color-primary);
+    }
+  }
+
+  &__form-groub {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.6rem;
+  }
+}
+
+//*****************************/
+//* Edit-Eintrag-Form */
+//****************************/
+.edit-eintrag {
+  display: none;
+  width: 95vw;
+  max-width: 27rem;
+  padding: 1.6rem;
+  background-color: var(--color-grey-light-1);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  filter: saturate(1.6);
+
+  &--active {
+    display: block;
+  }
+
+  &__form {
+    font-size: 1.3rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  &__input {
+    padding: 0.8rem 1.2rem;
+    font-family: inherit;
+    font-size: inherit;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-grey-dark-1);
+
+    &:focus {
+      outline: none;
+      border: 1px solid var(--color-primary);
+    }
+  }
+}
